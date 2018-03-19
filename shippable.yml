@@ -18,7 +18,7 @@ jobs:
       - IN: app_registry
       - OUT: app_image
 
-  - name: build_app_image
+  - name: deploy_app
     type: runSh
     runtime:
       nodePool: aarch64_ubuntu1604
@@ -31,8 +31,7 @@ jobs:
           name: build_app_image
           script:
             - uname -a
-            - echo "pull the image with provided tag"
-
+            - echo "ssh into the machine and deploy application"
 
 ################################################
 ################ CI Config #####################

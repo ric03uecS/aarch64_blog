@@ -34,6 +34,9 @@ _extract_deployment_endpoint() {
 	echo "Extracting username and ip address of deployment endpoint"
   echo "-----------------------------------"
 
+	local keys=$(shipctl get_integration_resource_keys app_deployment_endpoint)
+	echo $key
+
 	local deployment_username=$(shipctl get_integration_resource_field app_deployment_endpoint username)
 	echo "Username: $deployment_username"
   echo "-----------------------------------"

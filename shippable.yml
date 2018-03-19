@@ -37,6 +37,8 @@ jobs:
           name: deploy_app_image
           script:
             - uname -a
+            - pwd
+            - ls -atlh $BUILD_DIR/IN
             - pushd $BUILD_DIR/IN/aarch64_blog/gitRepo/
             - ls -atlh
             - ./deploy.sh

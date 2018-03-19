@@ -1,7 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Release version: #{release}
-  p This blog is running on the host: #{version}
-
+	h1= title
+	h3 Release version
+	p #{release}
+	<br>
+	h3 Host config
+	p #{version}

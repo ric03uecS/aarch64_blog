@@ -76,8 +76,11 @@ _update_app() {
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$remove_cmd"
   echo "-----------------------------------"
 
+	# extract release version
+	local release=$(echo $APP_IMAGE | cut -d':' -f 2)
+
 	echo "Running new container"
-	local run_cmd="sudo docker run -d -p 3000:3000 --name=$APP_CONTAINER_NAME $APP_IMAGE"
+	local run_cmd="sudo docker run -d -p 3000:3000 --env RELEASE=$release --name=$APP_CONTAINER_NAME $APP_IMAGE"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$run_cmd"
   echo "-----------------------------------"
 }

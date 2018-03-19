@@ -64,7 +64,11 @@ build:
     image_tag: v6.2.4
   ci:
     - node --version
+    - export XUNIT_FILE=shippable/testresults/result.xml
     - npm test
+    - mkdir -p shippable/testresults
+    - mv xunit.xml $XUNIT_FILE
+    - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
   on_success:
     - echo "Pushing the image after successful build and updating the tag"
     - export IMAGE_NAME=ric03uec/aarch64_app:$BUILD_NUMBER

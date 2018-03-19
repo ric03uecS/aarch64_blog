@@ -64,8 +64,7 @@ build:
     image_tag: v6.2.4
   ci:
     - node --version
-    - docker --version
-    - echo "run some tests here"
+    - npm test
   on_success:
     - echo "Pushing the image after successful build and updating the tag"
     - export IMAGE_NAME=ric03uec/aarch64_app:$BUILD_NUMBER

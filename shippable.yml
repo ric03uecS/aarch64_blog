@@ -7,12 +7,12 @@ resources:
     type: image
     integration: app_registry
     pointer:
-      sourceName: ric03uec/aarch64_blog
+      sourceName: ric03uec/aarch64_app
     seed:
       versionName: master
 
 jobs:
-  - name: app_runCI
+  - name: aarch64_blog_runCI
     type: runCI
     steps:
       - IN: app_registry

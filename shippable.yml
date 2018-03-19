@@ -16,6 +16,23 @@ jobs:
     type: runCI
     steps:
       - IN: app_registry
+      - OUT: app_image
+
+  - name: build_app_image
+    type: runSH
+    runtime:
+      nodePool: aarch64_ubuntu1604
+    steps:
+      - IN: app_registry
+        switch: off
+      - IN: app_image
+        switch: off
+      - TASK:
+        name: build_app_image
+        script:
+          - uname -a
+          - echo "pull the image with provided tag"
+
 
 ################################################
 ################ CI Config #####################
@@ -23,6 +40,9 @@ jobs:
 language: node_js
 node_js:
   - 8.4.0
+
+runtime:
+  nodePool: aarch64_ubuntu1604
 
 build:
   ci:

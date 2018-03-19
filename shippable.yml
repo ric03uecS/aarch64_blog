@@ -11,14 +11,23 @@ resources:
     seed:
       versionName: master
 
-language: node_js
+jobs:
+  - name: aarch64_blog_runCI
+    type: runCI
+    steps:
+      - IN: aarch64_registry
 
-python:
+################################################
+################ CI Config #####################
+################################################
+language: node_js
+node_js:
   - 8.4.0
 
 build:
   ci:
     - node --version
+    - docker --version
     - echo "run some tests here"
     - echo "use shipctl to get registry login"
     - echo "build latest master image and push"

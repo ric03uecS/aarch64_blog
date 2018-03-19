@@ -19,7 +19,7 @@ jobs:
       - OUT: app_image
 
   - name: build_app_image
-    type: runSH
+    type: runSh
     runtime:
       nodePool: aarch64_ubuntu1604
     steps:

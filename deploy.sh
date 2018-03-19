@@ -6,8 +6,8 @@ readonly PRIVATE_KEY_LOCATION=/tmp/privateKey
 
 _extract_private_key() {
 	echo "Extracting private key"
-	#local privateKey=$(shipctl get_integration_resource_field app_deploy_key privateKey)
-	local privateKey=$(shipctl get_integration_resource_keys app_deploy_key)
+	local privateKey=$(shipctl get_integration_resource_field app_deploy_key key)
+	#local privateKey=$(shipctl get_integration_resource_keys app_deploy_key)
 
 	echo "Writing private key to file"
 	echo $privateKey > $PRIVATE_KEY_LOCATION

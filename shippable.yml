@@ -28,10 +28,10 @@ jobs:
       - IN: app_image
         switch: off
       - TASK:
-        name: build_app_image
-        script:
-          - uname -a
-          - echo "pull the image with provided tag"
+          name: build_app_image
+          script:
+            - uname -a
+            - echo "pull the image with provided tag"
 
 
 ################################################

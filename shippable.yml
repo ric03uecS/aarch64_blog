@@ -39,7 +39,7 @@ jobs:
             - uname -a
             - pwd
             - ls -atlh $BUILD_DIR/IN
-            - pushd $BUILD_DIR/IN/aarch64_blog/gitRepo/
+            - pushd $(shipctl get_resource_state "aarch64_blog")
             - ls -atlh
             - ./deploy.sh
             - popd

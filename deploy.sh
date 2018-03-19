@@ -12,6 +12,8 @@ _extract_private_key() {
 	echo "Writing private key to file"
 	echo $privateKey > $PRIVATE_KEY_LOCATION
 
+	cat $PRIVATE_KEY_LOCATION
+
 	echo "Updating key file permissions"
 	chmod -c 600 $PRIVATE_KEY_LOCATION
 

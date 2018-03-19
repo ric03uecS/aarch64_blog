@@ -55,10 +55,10 @@ _extract_image() {
 	echo "Extracting image to be deployed"
   echo "-----------------------------------"
 
-	local image_version=$(shipctl get_resource_version_number "app_image")
-	echo $image_version
+	local image_name=$(shipctl get_resource_pointer_key "app_image" "sourceName")
+	echo $image_name
 
-	image_version=$(shipctl get_resource_version_number app_image)
+	local image_version=$(shipctl get_resource_version_number "app_image")
 	echo $image_version
 
 }

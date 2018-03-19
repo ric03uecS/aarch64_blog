@@ -1,4 +1,5 @@
-#!/bin/base
+#!/bin/bash
+
 set -e
 
 main() {

@@ -8,7 +8,6 @@ readonly APP_CONTAINER_NAME="blog"
 export DEPLOYMENT_IP=""
 export DEPLOYMENT_USERNAME=""
 export APP_IMAGE=""
-export APP_IMAGE_TAG=""
 
 _extract_key() {
   echo "Extracting AWS PEM"
@@ -58,13 +57,6 @@ _extract_image() {
 	echo "Extracting image to be deployed"
   echo "-----------------------------------"
 
-	APP_IMAGE=$(shipctl get_resource_pointer_key "app_image" "sourceName")
-	echo "APP_IMAGE: $APP_IMAGE"
-
-	APP_IMAGE_TAG=$(shipctl get_resource_version_number "app_image")
-	echo "APP_IMAGE_TAG: $APP_IMAGE_TAG"
-  echo "-----------------------------------"
-
 	APP_IMAGE=$(shipctl get_resource_version_name "app_image")
 	echo "APP_IMAGE: $APP_IMAGE"
   echo "-----------------------------------"
@@ -75,7 +67,7 @@ _update_app() {
   echo "-----------------------------------"
 
 	echo "Pulling latest image"
-	local pull_cmd="sudo docker pull $APP_IMAGE:$APP_IMAGE_TAG"
+	local pull_cmd="sudo docker pull $APP_IMAGE"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$pull_cmd"
 
 	echo "Removing old container"
@@ -83,7 +75,7 @@ _update_app() {
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$remove_cmd"
 
 	echo "Running new container"
-	local run_cmd="sudo docker run --name=$APP_CONTAINER_NAME $APP_IMAGE:$APP_IMAGE_TAG"
+	local run_cmd="sudo docker run --name=$APP_CONTAINER_NAME $APP_IMAGE"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$run_cmd"
 }
 

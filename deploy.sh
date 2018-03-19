@@ -4,8 +4,11 @@ set -e
 
 readonly PRIVATE_KEY_LOCATION=/tmp/privateKey
 readonly APP_CONTAINER_NAME="blog"
+
 export DEPLOYMENT_IP=""
 export DEPLOYMENT_USERNAME=""
+export APP_IMAGE=""
+export APP_IMAGE_TAG=""
 
 _extract_key() {
   echo "Extracting AWS PEM"
@@ -55,27 +58,33 @@ _extract_image() {
 	echo "Extracting image to be deployed"
   echo "-----------------------------------"
 
-	local image_name=$(shipctl get_resource_pointer_key "app_image" "sourceName")
-	echo $image_name
+	APP_IMAGE=$(shipctl get_resource_pointer_key "app_image" "sourceName")
+	echo "APP_IMAGE: $APP_IMAGE"
+  echo "-----------------------------------"
 
-	local image_version=$(shipctl get_resource_version_number "app_image")
-	echo $image_version
-
+	APP_IMAGE_TAG=$(shipctl get_resource_version_number "app_image")
+	echo "APP_IMAGE_TAG: $APP_IMAGE_TAG"
+  echo "-----------------------------------"
 }
 
 _update_app() {
 	echo "Updating app"
   echo "-----------------------------------"
 
-	local pull_cmd="sudo docker pull ric03uec/aarch64_app:20"
+	echo "Pulling latest image"
+  echo "-----------------------------------"
+	local pull_cmd="sudo docker pull $APP_IMAGE:$APP_IMAGE_TAG"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$pull_cmd"
 
+	echo "Removing old container"
+  echo "-----------------------------------"
 	local remove_cmd="sudo docker rm -f $APP_CONTAINER_NAME"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$remove_cmd"
 
-	local run_cmd="sudo docker run --name=$APP_CONTAINER_NAME $APP_IMAGE"
-
-
+	echo "Running new container"
+  echo "-----------------------------------"
+	local run_cmd="sudo docker run --name=$APP_CONTAINER_NAME $APP_IMAGE:$APP_IMAGE_TAG"
+	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$run_cmd"
 }
 
 main() {
@@ -84,6 +93,7 @@ main() {
 	_extract_key
 	_extract_deployment_endpoint
 	_extract_image
+	_update_app
 }
 
 main

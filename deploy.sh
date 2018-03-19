@@ -8,7 +8,7 @@ _extract_key() {
   echo "Extracting AWS PEM"
   echo "-----------------------------------"
 	local pem_key_path=$(shipctl get_resource_meta app_deploy_key)
-	ls -atlh $pem_key_path
+	pushd $pem_key_path
   if [ ! -f "integration.json" ]; then
     echo "No credentials file found at location: $pem_key_path"
     return 1

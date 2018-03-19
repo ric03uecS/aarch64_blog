@@ -45,6 +45,9 @@ runtime:
   nodePool: aarch64_ubuntu1604
 
 build:
+  pre_ci_boot:
+    image_name: drydockaarch64/u16nodeall
+    image_tag: v6.2.4
   ci:
     - node --version
     - docker --version

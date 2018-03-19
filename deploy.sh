@@ -3,6 +3,9 @@
 set -e
 
 readonly PRIVATE_KEY_LOCATION=/tmp/privateKey
+readonly APP_CONTAINER_NAME="blog"
+export DEPLOYMENT_IP=""
+export DEPLOYMENT_USERNAME=""
 
 _extract_key() {
   echo "Extracting AWS PEM"
@@ -34,21 +37,45 @@ _extract_deployment_endpoint() {
 	echo "Extracting username and ip address of deployment endpoint"
   echo "-----------------------------------"
 
-	local keys=$(shipctl get_integration_resource_keys app_deployment_endpoint)
-	echo $key
-
 	local endpoint_int_path=$(shipctl get_resource_meta app_deployment_endpoint)
 	pushd $endpoint_int_path
 
-	local deployment_username=$(cat integration.json | jq -r '.username')
-	echo "Username: $deployment_username"
+	DEPLOYMENT_USERNAME=$(cat integration.json | jq -r '.username')
+	echo "Username: $DEPLOYMENT_USERNAME"
   echo "-----------------------------------"
 
-	local deployment_ip=$(cat integration.json | jq -r '.ip')
-	echo "IP: $deployment_ip"
+	DEPLOYMENT_IP=$(cat integration.json | jq -r '.ip')
+	echo "IP: $DEPLOYMENT_IP"
   echo "-----------------------------------"
 
 	popd
+}
+
+_extract_image() {
+	echo "Extracting image to be deployed"
+  echo "-----------------------------------"
+
+	local image_version=$(shipctl get_resource_version_number "app_image")
+	echo $image_version
+
+	image_version=$(shipctl get_resource_version_number app_image)
+	echo $image_version
+
+}
+
+_update_app() {
+	echo "Updating app"
+  echo "-----------------------------------"
+
+	local pull_cmd="sudo docker pull ric03uec/aarch64_app:20"
+	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$pull_cmd"
+
+	local remove_cmd="sudo docker rm -f $APP_CONTAINER_NAME"
+	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$remove_cmd"
+
+	local run_cmd="sudo docker run --name=$APP_CONTAINER_NAME $APP_IMAGE"
+
+
 }
 
 main() {
@@ -56,6 +83,7 @@ main() {
   eval $(ssh-agent -s)
 	_extract_key
 	_extract_deployment_endpoint
+	_extract_image
 }
 
 main

@@ -37,14 +37,18 @@ _extract_deployment_endpoint() {
 	local keys=$(shipctl get_integration_resource_keys app_deployment_endpoint)
 	echo $key
 
-	local deployment_username=$(shipctl get_integration_resource_field app_deployment_endpoint username)
+	local endpoint_int_path=$(shipctl get_resource_meta app_deployment_endpoint)
+	pushd $endpoint_int_path
+
+	local deployment_username=$(cat integration.json | jq -r '.username')
 	echo "Username: $deployment_username"
   echo "-----------------------------------"
 
-	local deployment_ip=$(shipctl get_integration_resource_field app_deployment_endpoint ip)
+	local deployment_ip=$(cat integration.json | jq -r '.ip')
 	echo "IP: $deployment_ip"
   echo "-----------------------------------"
 
+	popd
 }
 
 main() {

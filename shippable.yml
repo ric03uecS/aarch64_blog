@@ -11,9 +11,15 @@ resources:
     seed:
       versionName: master
 
+  ## PEM key integration to be used to ssh into deployment host
   - name: app_deploy_key
     type: integration
     integration: app_deployment
+
+  ## Key-value pair integration with "username" and "ip" of deployment host
+  - name: app_deployment_endpoint
+    type: integration
+    integration: app_deployment_endpoint
 
 jobs:
   - name: aarch64_blog_runCI
@@ -28,6 +34,7 @@ jobs:
       nodePool: aarch64_ubuntu1604
     steps:
       - IN: app_deploy_key
+      - IN: app_deployment_endpoint
       - IN: aarch64_blog
       - IN: app_registry
         switch: off
@@ -36,7 +43,6 @@ jobs:
       - TASK:
           name: deploy_app_image
           script:
-            - ls -atlh $BUILD_DIR/IN
             - pushd $(shipctl get_resource_state "aarch64_blog")
             - ./deploy.sh
             - popd

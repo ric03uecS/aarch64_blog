@@ -30,32 +30,25 @@ _extract_key() {
   popd
 }
 
-_extract_private_key() {
-	echo "Extracting private key"
-	local privateKey=$(shipctl get_integration_resource_field app_deploy_key key)
-	#local privateKey=$(shipctl get_integration_resource_keys app_deploy_key)
+_extract_deployment_endpoint() {
+	echo "Extracting username and ip address of deployment endpoint"
+  echo "-----------------------------------"
 
-	echo "Writing private key to file"
-	echo $privateKey > $PRIVATE_KEY_LOCATION
+	local deployment_username=$(shipctl get_integration_resource_field app_deployment_endpoint username)
+	echo "Username: $deployment_username"
+  echo "-----------------------------------"
 
-	cat $PRIVATE_KEY_LOCATION
+	local deployment_ip=$(shipctl get_integration_resource_field app_deployment_endpoint ip)
+	echo "IP: $deployment_ip"
+  echo "-----------------------------------"
 
-	echo "Updating key file permissions"
-	chmod -c 600 $PRIVATE_KEY_LOCATION
-
-	echo "adding private key to ssh-keychain"
-	ssh-add $PRIVATE_KEY_LOCATION
-
-	echo "listing all added key-pairs"
-	ssh-add -L
 }
-
 
 main() {
 	echo "Deploying application"
   eval $(ssh-agent -s)
-	#_extract_private_key
 	_extract_key
+	_extract_deployment_endpoint
 }
 
 main

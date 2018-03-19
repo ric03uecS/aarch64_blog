@@ -1,3 +1,14 @@
-This project is created from a GitLab [Project Template](https://docs.gitlab.com/ce/gitlab-basics/create-project.html)
+Demo blog
+---
 
-Additions and changes to the project can be proposed [on the original project](https://gitlab.com/gitlab-org/project-templates/express)
+- This demo blog and pipelines are built on and for aarch64 nodejs platform
+  with following features
+    - Two tier dockerized nodejs application
+    - single YML ith CI and pipeline configuration
+    - CI with test and code coverage
+    - CI and pipeline jobs running on an aarch64 ubuntu 16.04 host on packet.net
+    - build and push application image after each successful CI run
+    - link the docker image version with CI version
+    - deploy the app to aarch64 host on packet.net
+    - update the release version on the app during each deployment which can be
+      verified by opening the app URL over internet

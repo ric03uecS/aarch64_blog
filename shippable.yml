@@ -58,6 +58,8 @@ node_js:
 runtime:
   nodePool: aarch64_ubuntu1604
 
+env:
+  - APP_IMAGE_REPO=ric03uec/aarch64_app
 build:
   pre_ci_boot:
     image_name: drydockaarch64/u16nodall
@@ -71,7 +73,7 @@ build:
     - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
   on_success:
     - echo "Pushing the image after successful build and updating the tag"
-    - export IMAGE_NAME=ric03uec/aarch64_app:$BUILD_NUMBER
+    - export IMAGE_NAME=$APP_IMAGE_REPO:$BUILD_NUMBER
     - docker build -t $IMAGE_NAME -f Dockerfile .
     - docker push $IMAGE_NAME
     - export IMAGE_VERSION_FILE="$APP_IMAGE_NAME.env"

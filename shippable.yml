@@ -16,6 +16,7 @@ jobs:
     type: runCI
     steps:
       - IN: app_registry
+      - IN: app_image
       - OUT: app_image
 
   - name: build_app_image

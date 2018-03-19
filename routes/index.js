@@ -26,4 +26,16 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+router.get('/add', function(req, res, next) {
+	var first = Number(req.query.first, 10);
+	var second = Number(req.query.second, 10);
+	var result = add(first, second);
+
+	res.status(200).send(JSON.stringify(result));
+});
+
+router.add = function (first, second) {
+  return first + second;
+}
+
 module.exports = router;

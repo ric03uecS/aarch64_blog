@@ -12,19 +12,7 @@ build:
     - docker build -t $IMAGE_NAME -f Dockerfile .
     - docker push $IMAGE_NAME
 
-  on_success:
-    - echo versionName=$IMAGE_NAME > "$JOB_STATE/$IMAGE_BLOG_NAME.env"
-
 integrations:
   hub:
-    - integrationName: reg_dh_ric03uec
+    - integrationName: aarch64_registry
       type: docker
-  notifications:
-    - integrationName: email
-      type: email
-      recipients:
-        - devashish.86@gmail.com
-      on_success: never
-      on_failure: always
-      on_pull_request: always
-      on_start: never

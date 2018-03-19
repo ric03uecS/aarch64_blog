@@ -36,11 +36,8 @@ jobs:
       - TASK:
           name: deploy_app_image
           script:
-            - uname -a
-            - pwd
             - ls -atlh $BUILD_DIR/IN
             - pushd $(shipctl get_resource_state "aarch64_blog")
-            - ls -atlh
             - ./deploy.sh
             - popd
 

@@ -10,7 +10,7 @@ _extract_private_key() {
 	#local privateKey=$(shipctl get_integration_resource_keys app_deploy_key)
 
 	echo "Writing private key to file"
-	echo $privateKey > $PRIVATE_KEY_LOCATION
+	echo -e $privateKey > $PRIVATE_KEY_LOCATION
 
 	cat $PRIVATE_KEY_LOCATION
 

@@ -1,18 +1,24 @@
+resources:
+  - name: aarch64_registry
+    type: cliConfig
+    integration: ric03uec-dockerhub
+
+  - name: app_image
+    type: image
+    integration: aarch64_registry
+    pointer:
+      sourceName: ric03uec/aarch64_blog
+    seed:
+      versionName: master
+
 language: node_js
 
 python:
   - 8.4.0
 
-env:
-  - IMAGE_NAME=ric03uec/demoblog:ci.$BUILD_NUMBER
-
 build:
   ci:
     - node --version
-    - docker build -t $IMAGE_NAME -f Dockerfile .
-    - docker push $IMAGE_NAME
-
-integrations:
-  hub:
-    - integrationName: aarch64_registry
-      type: docker
+    - echo "run some tests here"
+    - echo "use shipctl to get registry login"
+    - echo "build latest master image and push"

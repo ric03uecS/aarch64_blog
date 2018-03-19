@@ -13,7 +13,7 @@ Demo blog
     - update the release version on the app during each deployment which can be
       verified by opening the app URL over internet
 
-## Custom setup
+## Setup
 
 To set a similar pipeline, follow the steps mentioned below
 

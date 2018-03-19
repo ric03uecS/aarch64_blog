@@ -60,10 +60,13 @@ _extract_image() {
 
 	APP_IMAGE=$(shipctl get_resource_pointer_key "app_image" "sourceName")
 	echo "APP_IMAGE: $APP_IMAGE"
-  echo "-----------------------------------"
 
 	APP_IMAGE_TAG=$(shipctl get_resource_version_number "app_image")
 	echo "APP_IMAGE_TAG: $APP_IMAGE_TAG"
+  echo "-----------------------------------"
+
+	APP_IMAGE=$(shipctl get_resource_version_name "app_image")
+	echo "APP_IMAGE: $APP_IMAGE"
   echo "-----------------------------------"
 }
 
@@ -72,17 +75,14 @@ _update_app() {
   echo "-----------------------------------"
 
 	echo "Pulling latest image"
-  echo "-----------------------------------"
 	local pull_cmd="sudo docker pull $APP_IMAGE:$APP_IMAGE_TAG"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$pull_cmd"
 
 	echo "Removing old container"
-  echo "-----------------------------------"
 	local remove_cmd="sudo docker rm -f $APP_CONTAINER_NAME"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$remove_cmd"
 
 	echo "Running new container"
-  echo "-----------------------------------"
 	local run_cmd="sudo docker run --name=$APP_CONTAINER_NAME $APP_IMAGE:$APP_IMAGE_TAG"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$run_cmd"
 }

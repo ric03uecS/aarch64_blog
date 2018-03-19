@@ -71,7 +71,7 @@ _update_app() {
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$pull_cmd"
 
 	echo "Removing old container"
-	local remove_cmd="sudo docker rm -f $APP_CONTAINER_NAME"
+	local remove_cmd="sudo docker rm -f $APP_CONTAINER_NAME || true"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$remove_cmd"
 
 	echo "Running new container"

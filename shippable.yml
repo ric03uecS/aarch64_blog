@@ -1,21 +1,21 @@
 resources:
-  - name: aarch64_registry
+  - name: app_registry
     type: cliConfig
-    integration: ric03uec-dockerhub
+    integration: app_registry
 
   - name: app_image
     type: image
-    integration: aarch64_registry
+    integration: app_registry
     pointer:
       sourceName: ric03uec/aarch64_blog
     seed:
       versionName: master
 
 jobs:
-  - name: aarch64_blog_runCI
+  - name: app_runCI
     type: runCI
     steps:
-      - IN: aarch64_registry
+      - IN: app_registry
 
 ################################################
 ################ CI Config #####################

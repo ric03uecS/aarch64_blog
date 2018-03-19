@@ -36,6 +36,7 @@ jobs:
       - IN: app_deploy_key
       - IN: app_deployment_endpoint
       - IN: aarch64_blog
+        switch: off
       - IN: app_registry
         switch: off
       - IN: app_image

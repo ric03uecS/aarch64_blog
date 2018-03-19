@@ -64,6 +64,7 @@ build:
     image_tag: v6.2.4
   ci:
     - node --version
+    - npm install
     - export XUNIT_FILE=shippable/testresults/result.xml
     - npm test
     - mkdir -p shippable/testresults

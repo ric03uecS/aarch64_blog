@@ -48,15 +48,16 @@ build:
     image_name: drydockaarch64/u16nodall
     image_tag: v6.2.4
   ci:
-    - export IMAGE_NAME=ric03uec/demoblog:ci.$BUILD_NUMBER
+    - export IMAGE_NAME=ric03uec/aarch64_app:$BUILD_NUMBER
     - node --version
     - docker --version
-    - env
     - echo "run some tests here"
-    - echo "use shipctl to get registry login"
     - echo "build latest master image and push"
-    #- docker build -t $IMAGE_NAME -f Dockerfile .
-    #- docker push $IMAGE_NAME
+    - docker build -t $IMAGE_NAME -f Dockerfile .
+    - docker push $IMAGE_NAME
   on_success:
     - echo "Saving the job version as image tag"
+    - export IMAGE_VERSION_FILE="$APP_IMAGE_NAME.env"
+    - echo versionName=$IMAGE_NAME > "$IMAGE_VERSION_FILE"
+    - shipctl copy_file_to_state "$IMAGE_VERSION_FILE"
     #- echo versionName=$IMAGE_NAME > "$JOB_STATE/$IMAGE_BLOG_NAME.env"

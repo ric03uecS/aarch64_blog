@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
 		res.render('index',
 			{
 				title: 'aarch64 blog',
-				release: process.env.release,
+				release: process.env.RELEASE || 'master',
 				version: unameOutput
 			}
 		);

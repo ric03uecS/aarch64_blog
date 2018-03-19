@@ -61,3 +61,8 @@ build:
     - echo versionName=$IMAGE_NAME > "$IMAGE_VERSION_FILE"
     - shipctl copy_file_to_state "$IMAGE_VERSION_FILE"
     #- echo versionName=$IMAGE_NAME > "$JOB_STATE/$IMAGE_BLOG_NAME.env"
+
+integrations:
+  hub:
+    - integrationName: app_registry
+      type: docker

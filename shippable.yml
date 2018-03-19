@@ -34,10 +34,10 @@ jobs:
       - IN: app_image
         switch: off
       - TASK:
-          name: build_app_image
+          name: deploy_app_image
           script:
             - uname -a
-            - pushd $BUILD_DIR
+            - pushd $BUILD_DIR/IN
             - ls -atlh
 
 ################################################

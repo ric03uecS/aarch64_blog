@@ -11,6 +11,10 @@ resources:
     seed:
       versionName: master
 
+  - name: app_deploy_key
+    type: integration
+    integration: app_deployment
+
 jobs:
   - name: aarch64_blog_runCI
     type: runCI
@@ -23,6 +27,8 @@ jobs:
     runtime:
       nodePool: aarch64_ubuntu1604
     steps:
+      - IN: app_deploy_key
+      - IN: aarch64_blog
       - IN: app_registry
         switch: off
       - IN: app_image
@@ -31,7 +37,8 @@ jobs:
           name: build_app_image
           script:
             - uname -a
-            - echo "ssh into the machine and deploy application"
+            - pushd $BUILD_DIR
+            - ls -atlh
 
 ################################################
 ################ CI Config #####################

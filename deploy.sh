@@ -78,9 +78,14 @@ _update_app() {
 
 	# extract release version
 	local release=$(echo $APP_IMAGE | cut -d':' -f 2)
+  local runMode=$(shipctl get_params_resource app_params "RUN_MODE")
+  local region=$(shipctl get_params_resource app_params "REGION")
+  local title=$(shipctl get_params_resource app_params "TITLE")
 
 	echo "Running new container"
-	local run_cmd="sudo docker run -d -p 3000:3000 --env RELEASE=$release --name=$APP_CONTAINER_NAME $APP_IMAGE"
+	local run_cmd="sudo docker run -d -p 3000:3000 --env RELEASE=$release --env RUN_MODE=$runMode --env REGION=$REGION --env APP_TITLE=$title --name=$APP_CONTAINER_NAME $APP_IMAGE"
+  echo "executing: $run_cmd"
+  echo "-----------------------------------"
 	ssh $DEPLOYMENT_USERNAME@$DEPLOYMENT_IP "$run_cmd"
   echo "-----------------------------------"
 }

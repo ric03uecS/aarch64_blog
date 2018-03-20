@@ -31,7 +31,10 @@ To set a similar pipeline, follow the steps mentioned below
    push/pull to docker hub
 1. Setup a subscription integration called `app_deploy_key` of type `PEM Key`.
    The PEM Key added for this integration should be able to
-   perform passwordless ssh into the packet.net host
+   perform passwordless ssh into the packet.net host. To generate this,
+    - ssh into the host
+    - run `ssh-keygen -t rsa`
+    - copy the file `/root/.ssh/id_rsa`
 1. Setup a subscription integration called `app_deployment_endpoint` of type
     `Key-Value Pair`. There should be two keys in this integration
     - `username`: set to `root`

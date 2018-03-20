@@ -34,8 +34,13 @@ _test_application() {
   local response=$(curl -XGET "$test_url")
 
   local region=$(echo $response | jq -r '.region')
+  local run_mode=$(echo $response | jq -r '.runMode')
+  local release=$(echo $response | jq -r '.release')
 
+  echo "-----------------------------------"
 	echo "Region: $region"
+  echo "Run mode: $run_mode"
+  echo "Release: $release"
   echo "-----------------------------------"
 
 }

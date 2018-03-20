@@ -17,7 +17,7 @@ resources:
       params:
         RUN_MODE: production
         REGION: seattle
-        TITLE: welcome to demo blog
+        TITLE: 'welcome to demo blog'
 
   ## PEM key integration to be used to ssh into deployment host
   - name: app_deploy_key

@@ -1,6 +1,10 @@
 Demo blog
 ---
 
+[![Run Status](https://api.shippable.com/projects/5aaf759fee4604160022a714/badge?branch=master)](https://app.shippable.com/github/ric03uecS/aarch64_blog)
+
+[![Coverage Badge](https://api.shippable.com/projects/5aaf759fee4604160022a714/coverageBadge?branch=master)](https://app.shippable.com/github/ric03uecS/aarch64_blog)
+
 - This demo blog and pipelines are built on and for aarch64 nodejs platform
   with following features
     - Two tier dockerized nodejs application

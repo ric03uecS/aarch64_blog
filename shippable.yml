@@ -11,6 +11,13 @@ resources:
     seed:
       versionName: master
 
+  - name: app_params
+    type: params
+    versionTemplate:
+      params:
+        RUN_MODE: development
+        REGION: seattle
+
   ## PEM key integration to be used to ssh into deployment host
   - name: app_deploy_key
     type: integration
@@ -41,12 +48,32 @@ jobs:
         switch: off
       - IN: app_image
         switch: off
+      - IN: app_params
+        switch: off
       - TASK:
           name: deploy_app_image
           script:
             - pushd $(shipctl get_resource_state "aarch64_blog")
             - ./deploy.sh
             - popd
+
+  - name: test_deployment
+    type: runSh
+    runtime:
+      nodePool: aarch64_ubuntu1604
+    steps:
+      - IN: app_deployment_endpoint
+      - IN: deploy_app
+      - TASK:
+          name: test_app_deployment
+          script:
+            - pushd $(shipctl get_resource_state "aarch64_blog")
+            - ./test_deployment.sh
+            - popd
+    on_success:
+      - script: echo 'succeeded'
+    on_failure:
+      - script: echo 'failed'
 
 ################################################
 ################ CI Config #####################

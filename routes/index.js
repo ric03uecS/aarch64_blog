@@ -18,12 +18,24 @@ router.get('/', function(req, res, next) {
 	uname.on('close', function (code) {
 		res.render('index',
 			{
-				title: 'aarch64 blog',
+				title: process.env.APP_TITLE || 'aarch64 blog',
+        runMode :  process.env.RUN_MODE || 'local',
 				release: process.env.RELEASE || 'master',
+        region: process.env.REGION || 'blr',
 				version: unameOutput
 			}
 		);
 	});
+});
+
+router.get('/status', function(req, res, next) {
+  var response = {
+    runMode :  process.env.RUN_MODE || 'local',
+    release: process.env.RELEASE || 'master',
+    region: process.env.REGION || 'blr'
+  };
+
+  res.status(200).send(JSON.stringify(response));
 });
 
 router.get('/add', function(req, res, next) {

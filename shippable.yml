@@ -64,6 +64,8 @@ jobs:
     steps:
       - IN: app_deployment_endpoint
       - IN: deploy_app
+      - IN: aarch64_blog
+        switch: off
       - TASK:
           name: test_app_deployment
           script:

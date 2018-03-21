@@ -92,7 +92,7 @@ env:
   - APP_IMAGE_REPO=ric03uec/aarch64_app
 build:
   pre_ci_boot:
-    image_name: drydockaarch64/u16nodall
+    image_name: drydock/aarch64_u16nodall
     image_tag: v6.2.4
   ci:
     - node --version
